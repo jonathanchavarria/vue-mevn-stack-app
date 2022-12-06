@@ -31,6 +31,7 @@ userRoute.route('/edit-user/:id').get((req, res, next) => {
     } else {
       res.json(data)
     }
+    
   })
 })
 

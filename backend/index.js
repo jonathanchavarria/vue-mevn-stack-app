@@ -44,6 +44,7 @@ app.use(cors())
 
 // API
 app.use('/api', userAPI)
+app.use('/api/auth', authAPI)
 
 // Create port
 const port = process.env.PORT || 4000

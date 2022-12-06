@@ -37,6 +37,7 @@ router.post(
     successRedirect: "/view",
     failureRedirect: "/",
   })
+  
 );
 
 module.exports = router;
