@@ -1,14 +1,14 @@
 <template>
   <div class="row justify-content-center">
     <div class="col-md-6">
-      <h3 class="text-center">Create Student</h3>
+      <h3 class="text-center">Create User</h3>
       <form @submit.prevent="handleSubmitForm">
         <div class="form-group">
-          <label>Name</label>
+          <label>Username</label>
           <input
             type="text"
             class="form-control"
-            v-model="student.name"
+            v-model="user.username"
             required
           />
         </div>
@@ -18,20 +18,21 @@
           <input
             type="email"
             class="form-control"
-            v-model="student.email"
+            v-model="user.email"
+            required
+          />
+        </div>
+        
+        <div class="form-group">
+          <label>Password</label>
+          <input
+            type="password"
+            class="form-control"
+            v-model="user.password"
             required
           />
         </div>
 
-        <div class="form-group">
-          <label>Phone</label>
-          <input
-            type="text"
-            class="form-control"
-            v-model="student.phone"
-            required
-          />
-        </div>
 
         <div class="form-group">
           <button class="btn btn-danger btn-block">Create</button>
@@ -47,25 +48,25 @@ import axios from "axios";
 export default {
   data() {
     return {
-      student: {
-        name: "",
+      user: {
+        username: "",
         email: "",
-        phone: "",
+        password: "",
       },
     };
   },
   methods: {
     handleSubmitForm() {
-      let apiURL = "http://localhost:4000/api/create-student";
+      let apiURL = "http://localhost:4000/api/create-user";
 
       axios
-        .post(apiURL, this.student)
+        .post(apiURL, this.user)
         .then(() => {
           this.$router.push("/view");
-          this.student = {
-            name: "",
+          this.user = {
+            username: "",
             email: "",
-            phone: "",
+            password: "",
           };
         })
         .catch((error) => {

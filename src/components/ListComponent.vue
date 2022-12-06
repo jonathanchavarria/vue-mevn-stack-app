@@ -4,25 +4,26 @@
       <table class="table table-striped">
         <thead class="thead-dark">
           <tr>
-            <th>Name</th>
+            <th>Username</th>
             <th>Email</th>
-            <th>Phone</th>
+            <th>Passwords</th>
             <th>Actions</th>
+
           </tr>
         </thead>
         <tbody>
-          <tr v-for="student in Students" :key="student._id">
-            <td>{{ student.name }}</td>
-            <td>{{ student.email }}</td>
-            <td>{{ student.phone }}</td>
+          <tr v-for="user in Users" :key="user._id">
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.password }} </td>
             <td>
               <router-link
-                :to="{ name: 'edit', params: { id: student._id } }"
+                :to="{ name: 'edit', params: { id: user._id } }"
                 class="btn btn-success"
                 >Edit
               </router-link>
               <button
-                @click.prevent="deleteStudent(student._id)"
+                @click.prevent="deleteUser(user._id)"
                 class="btn btn-danger"
               >
                 Delete
@@ -41,7 +42,7 @@ import axios from "axios";
 export default {
   data() {
     return {
-      Students: [],
+      Users: [],
     };
   },
   created() {
@@ -49,22 +50,22 @@ export default {
     axios
       .get(apiURL)
       .then((res) => {
-        this.Students = res.data;
+        this.Users = res.data;
       })
       .catch((error) => {
         console.log(error);
       });
   },
   methods: {
-    deleteStudent(id) {
-      let apiURL = `http://localhost:4000/api/delete-student/${id}`;
-      let indexOfArrayItem = this.Students.findIndex((i) => i._id === id);
+    deleteUser(id) {
+      let apiURL = `http://localhost:4000/api/delete-user/${id}`;
+      let indexOfArrayItem = this.Users.findIndex((i) => i._id === id);
 
       if (window.confirm("Do you really want to delete?")) {
         axios
           .delete(apiURL)
           .then(() => {
-            this.Students.splice(indexOfArrayItem, 1);
+            this.Users.splice(indexOfArrayItem, 1);
           })
           .catch((error) => {
             console.log(error);

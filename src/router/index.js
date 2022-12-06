@@ -7,6 +7,11 @@ const routes = [
   {
     path: '/',
     name: 'home',
+    component: () => import('../components/HomeComponent'),
+  },
+  {
+    path: '/create',
+    name: 'create',
     component: () => import('../components/CreateComponent'),
   },
   {
@@ -19,6 +24,12 @@ const routes = [
     name: 'edit',
     component: () => import('../components/EditComponent'),
   },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('../components/LoginComponent'),
+  },
+
 ]
 
 const router = new VueRouter({

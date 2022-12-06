@@ -2,7 +2,26 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const app = express();
+var session = require("express-session");
+const MongoStore = require("connect-mongo");
+const passport = require("passport");
 
+app.use(
+  session({
+    secret: "keyboard cat",
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: "mongodb://127.0.0.1:27017/mydatabase"}),
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+
+const authAPI = require('./routes/auth.route');
+
+app.use(authAPI);
+app.use(express.static("public"), express.static("dist"));
 // Connect mongoDB
 mongoose
   .connect('mongodb://127.0.0.1:27017/mydatabase')
@@ -13,8 +32,8 @@ mongoose
     console.error('Error connecting to mongo', err.reason)
   })
 
-const studentAPI = require('../backend/routes/student.route')
-const app = express()
+const userAPI = require('./routes/user.route')
+
 app.use(bodyParser.json())
 app.use(
   bodyParser.urlencoded({
@@ -24,7 +43,7 @@ app.use(
 app.use(cors())
 
 // API
-app.use('/api', studentAPI)
+app.use('/api', userAPI)
 
 // Create port
 const port = process.env.PORT || 4000
@@ -43,3 +62,6 @@ app.use(function (err, req, res, next) {
   if (!err.statusCode) err.statusCode = 500
   res.status(err.statusCode).send(err.message)
 })
+
+
+
